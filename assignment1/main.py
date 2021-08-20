@@ -1,26 +1,25 @@
 import requests
 
-# Fetching data from API
+# Fetching the data from the API
 posts = requests.get('https://my-json-server.typicode.com/typicode/demo/posts').json()
 comments = requests.get('https://my-json-server.typicode.com/typicode/demo/comments').json()
 
-# Initializing dictionary
-combined_data = {}
-# Initializing list for comments
+# Initializing a list to store comments
 comment_body = []
-# Initializing some variables
-check_id = id = 0
+# Getting the length of comments
+comments_length = len(comments)
 
-# Looping over the data and combining it
+# Iterating over the posts and comments to combine the data
 for post in posts:
-    id += 1
     for comment in comments:
-        if post['id'] == comment['postId']:
-            if (check_id != post['id']):
-                comment_body.clear()
+        # checking if the comment is associated with the particular post
+        if (post['id'] == comment['postId']):
+            # Appending the comment
             comment_body.append(comment['body'])
-            combined_data = {id: {"postId": post['id'], "title": post['title'], "comment": comment_body}}
-            check_id = post['id']
+    # Combining the posts and comments
+    post.update({'comments': comment_body.copy()})
 
-# Combined post and comment data
-print(combined_data)
+    # Clear the comment_body list
+    comment_body.clear()
+
+print(posts)
