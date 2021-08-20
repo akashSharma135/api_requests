@@ -1,10 +1,10 @@
 import requests
 
 # Fetching the data from api
-total_pages = requests.get('https://reqres.in/api/users?page=2').json()
+req = requests.get('https://reqres.in/api/users').json()
 
 # Total number of pages
-total_pages = total_pages['total_pages']
+total_pages = req['total_pages']
 
 total_users = 0
 
